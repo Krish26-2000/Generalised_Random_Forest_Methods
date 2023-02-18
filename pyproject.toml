@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.0"]
+
+
+[tool.setuptools_scm]
+write_to = "src/generalised_random_forest_methods/_version.py"
+
+[tool.pytask.ini_options]
+paths = ["./src/generalised_random_forest_methods", "./paper"]
+infer_latex_dependencies = true
