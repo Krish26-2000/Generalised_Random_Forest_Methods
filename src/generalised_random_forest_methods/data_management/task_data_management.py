@@ -1,24 +1,25 @@
 import pytask
-from generalised_random_forest_methods.config import BLD
-from generalised_random_forest_methods.config import SRC
-
-import pandas as pd
-from generalised_random_forest_methods.data_management import clean_data
-from generalised_random_forest_methods.utilities import read_yaml
-
-
-@pytask.mark.depends_on(
-    {
-        "data_info": SRC / "data_management" / "data_info.yaml",
-        "data": SRC / "data" / "data.csv",
-    }
+from generalised_random_forest_methods.config import BLD, SRC
+from generalised_random_forest_methods.data_management.clean_data import (
+    ipums_data,
 )
-@pytask.mark.produces(BLD / "python" / "data" / "data_clean.csv")
-def task_clean_data_python(depends_on, produces):
-    data_info = read_yaml(depends_on["data_info"])
-    data = pd.read_csv(depends_on["data"])
-    data = clean_data(data, data_info)
-    data.to_csv(produces, index=False)
 
+url = (
+    "https://www.dropbox.com/s/0gsml2tasys0deu/usa_00003.csv?dl=0"
+)
+
+@pytask.mark.produces(BLD / "python" / "usa_00003.csv")
+def task_save_ipums_data(produces):
+    """Import IPUMS data from Dropbox folder and save in the BLD folder
+
+    Args: 
+        produces: Specify the folder path to locate the file
+
+    Returns:
+        The IPUMS dataset
+    
+    """
+    data = ipums_data(url)
+    data.csv(produces)
 
 
