@@ -8,7 +8,7 @@ import scipy.special
 import matplotlib.pyplot as plt
 from sklearn.tree import plot_tree
 
-def ipums_data(url):
+def ipums_data(url_1):
     """Import and save the data created from IPUMS.
 
     Args:
@@ -18,5 +18,5 @@ def ipums_data(url):
         data(pandas.DataFrame): The IPUMS data.
     
     """
-    data = pd.read_csv(url)
+    data = pd.read_csv(url_1)
     return data
