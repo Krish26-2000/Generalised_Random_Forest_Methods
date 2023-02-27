@@ -18,9 +18,6 @@ dependencies:
   - pytask>=0.2
   - pytask-latex>=0.2
 
-
-
-
   # Misc
   - black
   - pre-commit
@@ -38,7 +35,9 @@ dependencies:
   - statsmodels
   - python-graphviz
   - python-kaleido
-
+  - econml
+  - matplotlib
+  - scikit-learn
 
   - pip:
     - -e .  # installs the project
