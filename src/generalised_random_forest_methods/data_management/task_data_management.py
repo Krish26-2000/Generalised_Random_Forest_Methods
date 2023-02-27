@@ -20,5 +20,5 @@ def task_save_ipums_data(produces):
         The IPUMS dataset
     
     """
-    data_2019 = ipums_data(url)
-    data_2019.to_csv(produces)
+    data = ipums_data(url)
+    data.to_csv(produces)
