@@ -9,7 +9,7 @@ url = (
 )
 
 #@pytask.mark.depends_on(url)
-@pytask.mark.produces(BLD / "python" / "usa_00004.csv")
+@pytask.mark.produces(BLD / "python" / "usa_00006.csv")
 def task_save_ipums_data(produces):
     """Import IPUMS data from Dropbox folder and save in the BLD folder
 
