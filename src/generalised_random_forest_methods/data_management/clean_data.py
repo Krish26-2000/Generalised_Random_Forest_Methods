@@ -19,4 +19,20 @@ def ipums_data(url):
     
     """
     data = pd.read_csv(url)
+    data = data.dropna()
+    return data
+
+def clean_data(data):
+    """
+
+    Args:
+        data:
+
+    Returns:
+
+    """
+    columns_to_drop = ['SAMPLE', 'SERIAL', 'CBSERIAL', 'HHWT', 'CLUSTER', 'STRATA', 'GQ',
+                       'PERNUM', 'PERWT', 'RACED', 'EDUCD', 'EMPSTATD']
+
+    data = data.drop(columns=columns_to_drop)
     return data

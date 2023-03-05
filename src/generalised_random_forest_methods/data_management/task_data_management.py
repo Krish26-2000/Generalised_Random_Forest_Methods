@@ -1,7 +1,11 @@
+import pandas as pd
 import pytask
 from generalised_random_forest_methods.config import BLD, SRC
 from generalised_random_forest_methods.data_management.clean_data import (
     ipums_data, 
+)
+from generalised_random_forest_methods.data_management.clean_data import (
+    clean_data,
 )
 
 url = (
@@ -22,3 +26,19 @@ def task_save_ipums_data(produces):
     """
     data = ipums_data(url)
     data.to_csv(produces)
+
+@pytask.mark.depends_on(BLD/ "python" / "usa_00006.csv")
+@pytask.mark.produces(BLD / "python" / "data"/ "final_df.pkl")
+def task_final_df(depends_on, produces):
+    """
+
+    Args:
+        depends_on:
+        produces:
+
+    Returns:
+
+    """
+    data = pd.read_csv(depends_on)
+    data = clean_data(data)
+    data.to_pickle(produces)
