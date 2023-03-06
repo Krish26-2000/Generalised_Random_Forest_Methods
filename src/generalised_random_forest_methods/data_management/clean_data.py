@@ -19,8 +19,8 @@ def ipums_data(url):
     
     """
     data = pd.read_csv(url)
-    data = data.dropna()
     return data
+
 
 def clean_data(data, data_info):
     """
@@ -34,6 +34,7 @@ def clean_data(data, data_info):
     columns_to_drop = data_info["columns_to_drop"]
 
     data = data.drop(columns=columns_to_drop)
+    data = data.dropna()
     data = data[data["MARRINYR"] == 2] 
     data['SEX_SP'] = data['SEX_SP'].astype(int)
     data = data[data["AGE"] > 18] 
@@ -41,10 +42,11 @@ def clean_data(data, data_info):
     data = data.rename(columns = {'SEX_SP' : 'spouse_sex', 'MARST' : 'married_status'})
     return data
 
+
 def create_variables(data):
     """
     
-    Args:
+    Args:conda
         data:
 
     Returns:
@@ -56,3 +58,7 @@ def create_variables(data):
     data["married_year"].value_counts() #to understand how many people
                                         #married in each year.
     return data
+
+
+#data = ipums_data("/home/cheekoti_la/krishna/Generalised_Random_Forest_Methods/bld/python/usa_00006.csv")
+#print("data_loaded")
