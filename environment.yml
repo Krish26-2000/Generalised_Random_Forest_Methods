@@ -15,8 +15,8 @@ dependencies:
   - conda-lock
 
   # Package dependencies
-  - pytask>=0.2
-  - pytask-latex>=0.2
+  - pytask>=0.0.14
+  - pytask-latex>=0.0.12
 
   # Misc
   - black
