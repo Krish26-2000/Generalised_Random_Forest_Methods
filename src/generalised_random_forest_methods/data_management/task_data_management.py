@@ -1,9 +1,10 @@
 import pandas as pd
+from IPython.display import Image
 import pytask
 from generalised_random_forest_methods.utilities import read_yaml
 from generalised_random_forest_methods.config import BLD, SRC
 from generalised_random_forest_methods.data_management.clean_data import (
-    ipums_data, clean_data, create_columns,create_var_df
+    ipums_data, clean_data, create_columns, create_var_df, causal_model,
 )
 from generalised_random_forest_methods.config import TASK_1
 from generalised_random_forest_methods.config import TASK_2
@@ -90,3 +91,21 @@ for index, group in enumerate(TASK_1):
         data = pd.read_pickle(depends_on)
         variable_data = create_var_df()
         data[variable_data[index]].to_pickle(produces)
+
+
+@pytask.mark.depends_on(BLD / "python" / "data" / "final_df.pkl")
+@pytask.mark.produces(BLD / "python" / "plots" / "causal_model.png")
+def task_casual_model(depends_on, produces):
+    """
+
+    Args:
+        depends_on:
+        produces:
+
+    Returns:
+
+    """
+    data = pd.read_pickle(depends_on)
+    variable_data = create_var_df()
+    model = causal_model(data, *variable_data)
+    model.view_model(file_name=str(produces)[:-4])

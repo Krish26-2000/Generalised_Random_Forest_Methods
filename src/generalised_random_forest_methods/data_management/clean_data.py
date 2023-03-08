@@ -7,6 +7,8 @@ from econml.dml import CausalForestDML
 import scipy.special
 import matplotlib.pyplot as plt
 from sklearn.tree import plot_tree
+from dowhy import CausalModel
+from IPython.display import Image,display
 
 def ipums_data(url):
     """Import and save the data created from IPUMS.
@@ -77,4 +79,23 @@ def create_var_df():
     return features, treatment, instrument, outcome
 
 
+def causal_model(data, features, treatment, instrument, outcome):
+    """
 
+    Args:
+        features:
+        treatment:
+        instrument:
+        outcome:
+
+    Returns:
+
+    """
+    model = CausalModel(
+        data=data,
+        treatment=treatment,
+        outcome=outcome,
+        common_causes=features,
+        instruments=instrument,
+        effect_modifiers=None )
+    return model
