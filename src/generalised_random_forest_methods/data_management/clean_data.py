@@ -43,7 +43,7 @@ def clean_data(data, data_info):
     return data
 
 
-def create_variables(data):
+def create_columns(data):
     """
     
     Args:conda
@@ -57,6 +57,24 @@ def create_variables(data):
     data.loc[:, 'married_year'] = data["YEAR"] - 1
     data["married_year"].value_counts() #to understand how many people
                                         #married in each year.
+    data["outcome"] = (data["married_year"] > 2015).astype(int)  # Y
     return data
+
+
+def create_var_df():
+    """
+
+    Args:
+        data:
+
+    Returns:
+
+    """
+    features = ['SEX', 'RACE', 'EDUC', 'EMPSTAT', 'AGE']  # X
+    treatment = 'same_sex_couple'  # T
+    instrument = 'INCTOT'  # W
+    outcome = 'outcome'  # Y
+    return features, treatment, instrument, outcome
+
 
 
