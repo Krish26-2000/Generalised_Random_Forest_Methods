@@ -60,5 +60,3 @@ def create_variables(data):
     return data
 
 
-#data = ipums_data("/home/cheekoti_la/krishna/Generalised_Random_Forest_Methods/bld/python/usa_00006.csv")
-#print("data_loaded")
