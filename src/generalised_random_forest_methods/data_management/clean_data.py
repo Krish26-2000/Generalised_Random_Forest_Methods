@@ -8,6 +8,7 @@ import scipy.special
 import matplotlib.pyplot as plt
 from sklearn.tree import plot_tree
 from dowhy import CausalModel
+from sklearn.model_selection import train_test_split
 from IPython.display import Image,display
 
 def ipums_data(url):
@@ -63,7 +64,7 @@ def create_columns(data):
     return data
 
 
-def create_var_df():
+def return_var_dict():
     """
 
     Args:
@@ -72,11 +73,13 @@ def create_var_df():
     Returns:
 
     """
-    features = ['SEX', 'RACE', 'EDUC', 'EMPSTAT', 'AGE']  # X
-    treatment = 'same_sex_couple'  # T
-    instrument = 'INCTOT'  # W
-    outcome = 'outcome'  # Y
-    return features, treatment, instrument, outcome
+    var_dict = {
+                'features': ['SEX', 'RACE', 'EDUC', 'EMPSTAT', 'AGE'],  # X
+                'treatment': 'same_sex_couple',  # T
+                'instrument': 'INCTOT',  # W
+                'outcome': 'outcome',  # Y
+                    }
+    return var_dict
 
 
 def causal_model(data, features, treatment, instrument, outcome):
@@ -99,3 +102,32 @@ def causal_model(data, features, treatment, instrument, outcome):
         instruments=instrument,
         effect_modifiers=None )
     return model
+
+
+def train_test_data(data):
+    """
+
+    Args:
+        data:
+
+    Returns:
+
+    """
+    train, test = train_test_split(data, test_size=0.2)
+    return train, test
+
+
+def trained_data(train, test, features, treatment, instrument, outcome):
+    """
+
+    Args:
+        train:
+        test:
+        features:
+        treatment:
+        instrument:
+        outcome:
+
+    Returns:
+
+    """

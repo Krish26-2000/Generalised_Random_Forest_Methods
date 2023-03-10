@@ -8,10 +8,10 @@ BLD = SRC.joinpath("..", "..", "bld").resolve()
 TEST_DIR = SRC.joinpath("..", "..", "tests").resolve()
 PAPER_DIR = SRC.joinpath("..", "..", "paper").resolve()
 
-TASK_1 = ["features", "treatment", "instrument", "outcome"]
-
-TASK_2 = ["Y_train", "X_train", "T_train", "W_train", "X_test"]
+TASK_1 = ["outcome_train", "features_train", "treatment_train", "instrument_train", "features_test"]
 
 GROUPS = ["marital_status", "qualification"]
 
 __all__ = ["BLD", "SRC", "TEST_DIR"]
+
+NO_LONG_TASKS = True
