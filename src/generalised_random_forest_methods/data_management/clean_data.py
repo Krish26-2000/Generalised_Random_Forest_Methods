@@ -117,17 +117,3 @@ def train_test_data(data):
     return train, test
 
 
-def trained_data(train, test, features, treatment, instrument, outcome):
-    """
-
-    Args:
-        train:
-        test:
-        features:
-        treatment:
-        instrument:
-        outcome:
-
-    Returns:
-
-    """

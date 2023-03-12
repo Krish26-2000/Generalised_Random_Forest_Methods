@@ -1,5 +1,6 @@
 import plotly.express as px
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 
 
 def plot_regression_by_age(data, data_info, predictions, group):
