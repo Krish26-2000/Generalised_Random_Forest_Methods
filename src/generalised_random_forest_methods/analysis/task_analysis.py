@@ -61,7 +61,14 @@ def task_get_effects(depends_on,produces):
     df.reset_index(inplace=True, drop=True)
     df.to_pickle(produces)
 
+
+@pytask.mark.depends_on(BLD / "python" / "data" / "df.pkl")
+@pytask.mark.produces(BLD / "python" / "data" / "z_rolling_means.pkl")
+def task_calculate_z_means(depends_on, produces):
+    df = pd.read_pickle(depends_on)
     # calculate rolling mean
     z = df.rolling(window=30, center=True).mean()
+    with open(produces, 'wb') as file:
+        pickle.dump(z, file)
 
 
