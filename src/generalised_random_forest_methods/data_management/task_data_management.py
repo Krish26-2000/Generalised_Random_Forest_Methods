@@ -8,14 +8,14 @@ from generalised_random_forest_methods.data_management.clean_data import (
 from generalised_random_forest_methods.config import TASK_1
 
 url = (
-    "https://www.dropbox.com/s/luil3jn6m4jjdfj/usa_00006.csv?dl=1"
+    "https://www.dropbox.com/s/s2gr0x6wy1ms3e6/usa_00007.csv?dl=1"
 )
 
 
 #@pytask.mark.depends_on(url)
 # @pytask.mark.skipif(NO_LONG_TASKS, reason="skipping long task")
-@pytask.mark.produces(BLD / "python" / "usa_00006.csv")
-def tsk_save_ipums_data(produces):
+@pytask.mark.produces(BLD / "python" / "usa_00007.csv")
+def task_save_ipums_data(produces):
     """Import IPUMS data from Dropbox folder and save in the BLD folder
 
     Args: 
@@ -31,7 +31,7 @@ def tsk_save_ipums_data(produces):
 
 @pytask.mark.depends_on(
     {
-        "ipums_data": BLD / "python" / "usa_00006.csv",
+        "ipums_data": BLD / "python" / "usa_00007.csv",
         "data_info": SRC / "data_management" / "data_info.yaml",
     }
 )
