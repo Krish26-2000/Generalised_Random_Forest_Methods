@@ -43,6 +43,7 @@ def clean_data(data, data_info):
     data = data[data["AGE"] > 18] 
     data = data[data["MARST"] == 1]
     data = data.rename(columns = {'SEX_SP' : 'spouse_sex', 'MARST' : 'married_status'})
+    data.loc[data.ELDCH == 99, 'ELDCH'] = 0
     return data
 
 
@@ -60,7 +61,9 @@ def create_columns(data):
     data.loc[:, 'married_year'] = data["YEAR"] - 1
     data["married_year"].value_counts() #to understand how many people
                                         #married in each year.
+    data.loc[:, 'child_birth_year'] = 2023 - data["ELDCH"]
     data["outcome"] = (data["married_year"] > 2015).astype(int)  # Y
+    data["outcome_child"] = (data["child_birth_year"] > 2015).astype(int) # Y2
     return data
 
 
@@ -80,6 +83,7 @@ def return_var_dict():
                 'outcome': 'outcome',  # Y
                     }
     return var_dict
+
 
 
 def causal_model(data, features, treatment, instrument, outcome):
@@ -117,3 +121,54 @@ def train_test_data(data):
     return train, test
 
 
+def return_child_dict():
+    """
+
+    Args:
+        data:
+
+    Returns:
+
+    """
+    var_dict = {
+                'features2': ['SEX', 'RACE', 'EDUC', 'EMPSTAT', 'AGE', 'NCHILD'],  # X
+                'treatment2': 'same_sex_couple',  # T
+                'instrument2': 'INCTOT',  # W
+                'outcome2': 'outcome_child',  # Y
+                    }
+    return var_dict
+
+
+def causal_model_child(data, features2, treatment2, instrument2, outcome2):
+    """
+
+    Args:
+        features:
+        treatment:
+        instrument:
+        outcome:
+
+    Returns:
+
+    """
+    model = CausalModel(
+        data=data,
+        treatment=treatment2,
+        outcome=outcome2,
+        common_causes=features2,
+        instruments=instrument2,
+        effect_modifiers=None)
+    return model
+
+
+def train_test_childdata(data):
+    """
+
+    Args:
+        data:
+
+    Returns:
+
+    """
+    train2, test2 = train_test_split(data, test_size=0.3)
+    return train2, test2
