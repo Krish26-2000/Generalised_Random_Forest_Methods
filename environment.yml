@@ -31,6 +31,7 @@ dependencies:
   - jupyterlab
   - pyyaml
   - plotly>=5.5.0
+  - plotly-geo
   - pandas
   - statsmodels
   - python-graphviz
