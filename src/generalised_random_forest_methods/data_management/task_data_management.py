@@ -26,7 +26,7 @@ def tas_save_ipums_data(produces):
         produces: Specify the folder path to locate the file
 
     Returns:
-        The IPUMS dataset
+        data(pandas.DataFrame): The IPUMS dataset
     
     """
     data = ipums_data(url)
@@ -41,13 +41,16 @@ def tas_save_ipums_data(produces):
 )
 @pytask.mark.produces(BLD / "python" / "data" / "clean_df.pkl")
 def task_clean_df(depends_on, produces):
-    """
+    """Reads the data, cleans it with the function and saves the cleaned data
 
     Args:
-        depends_on:
-        produces:
+        depends_on(str): 
+            - The usa_00007.csv data file
+            - the dictionary called data_info.yaml
+        produces(str): the folder path containing data to be stored
 
     Returns:
+        cleaned_df(pickle): the cleaned datafile
 
     """
     data_info = read_yaml(depends_on["data_info"])
@@ -59,13 +62,14 @@ def task_clean_df(depends_on, produces):
 @pytask.mark.depends_on(BLD / "python" / "data" / "clean_df.pkl")
 @pytask.mark.produces(BLD / "python" / "data" / "final_df.pkl")
 def task_create_variables(depends_on, produces):
-    """
+    """Add new created variables to the clean_df and save it to make final_df
 
     Args:
-        depends_on:
-        produces:
+        depends_on(str): The cleaned_df
+        produces(str): the folder path containing data to be stored
 
     Returns:
+        final_df(pickle): the final datafile
 
     """
     clean_df = pd.read_pickle(depends_on)
@@ -76,13 +80,15 @@ def task_create_variables(depends_on, produces):
 @pytask.mark.depends_on(BLD / "python" / "data" / "final_df.pkl")
 @pytask.mark.produces(BLD / "python" / "plots" / "causal_model.png")
 def task_casual_model(depends_on, produces):
-    """
+    """Creates the causal model and saves in png format
 
     Args:
-        depends_on:
-        produces:
+        depends_on(str): the final_df dataset
+        produces(str): the folder path containing data to be stored
+
 
     Returns:
+        model(png): causal_model image
 
     """
     data = pd.read_pickle(depends_on)
@@ -97,13 +103,14 @@ def task_casual_model(depends_on, produces):
      BLD / "python" / "data" / "test_df.pkl"]
                       )
 def task_train_test_data(depends_on, produces):
-    """
+    """Splits the data into training and testing data
 
     Args:
-        depends_on:
-        produces:
+        depends_on(str): the final_df dataset
+        produces(str): the folder path containing data to be stored
 
     Returns:
+        df(pickle): the training and testing dataframes
 
     """
     data = pd.read_pickle(depends_on)
@@ -127,8 +134,8 @@ for index, group in enumerate(TASK_1):
         """
 
         Args:
-            depends_on:
-            produces:
+            depends_on(str):
+            produces(str):
             group:
 
         Returns:
