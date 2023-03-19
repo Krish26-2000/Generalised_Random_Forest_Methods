@@ -5,7 +5,8 @@ import pytask
 from generalised_random_forest_methods.analysis.model import return_child_param_dict
 from generalised_random_forest_methods.analysis.model import return_param_dict
 from generalised_random_forest_methods.analysis.model import train_causal_forest_model
-from generalised_random_forest_methods.config import BLD, SRC
+from generalised_random_forest_methods.config import BLD
+from generalised_random_forest_methods.config import SRC
 from generalised_random_forest_methods.utilities import read_yaml
 
 
@@ -18,6 +19,20 @@ from generalised_random_forest_methods.utilities import read_yaml
 )
 @pytask.mark.produces(BLD / "python" / "data" / "treatment_effects_dict.pkl")
 def task_fit_causal_forest(depends_on, produces):
+    """
+
+    Args:
+        depends_on(str):
+            - training data from final_df
+            - testing data from final_df
+            - data_info.yaml which contains information of variables in study
+        produces(str): the folder path containing data to e stored
+
+    Returns:
+        treatment_effects_dict(pickle): pickle file containing data on treatmnet effects and
+                                        confidence intervals
+
+    """
     train = pd.read_pickle(depends_on["train"])
     test = pd.read_pickle(depends_on["test"])
     data_info = read_yaml(depends_on["data_info"])
@@ -50,6 +65,15 @@ def task_fit_causal_forest(depends_on, produces):
 @pytask.mark.depends_on(BLD / "python" / "data" / "treatment_effects_dict.pkl")
 @pytask.mark.produces(BLD / "python" / "data" / "df.pkl")
 def task_get_effects(depends_on, produces):
+    """
+
+    Args:
+        depends_on:
+        produces:
+
+    Returns:
+
+    """
     with open(depends_on, "rb") as file:
         causal_forest_data = pickle.load(file)
 

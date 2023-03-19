@@ -4,8 +4,11 @@ from sklearn.linear_model import LassoCV
 
 def train_causal_forest_model(param_dict):
     """
+    Args:
+       param_dict(dict): The dictionary containing parameters of the model
 
     Returns:
+       causal_forest: the analysis from model from econml library
 
     """
     # set parameters for causal forest

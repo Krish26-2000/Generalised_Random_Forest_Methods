@@ -21,5 +21,3 @@ def task_plot_treatment_effects2(depends_on, produces):
     z2 = pd.read_pickle(depends_on)
     plot = treatment_effect_plot2(z2)
     plot.savefig(produces)
-
-

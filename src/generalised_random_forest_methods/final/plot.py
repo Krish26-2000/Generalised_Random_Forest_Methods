@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import plotly.figure_factory as ff
-import numpy as np
 import plotly.graph_objects as go
 from generalised_random_forest_methods.config import BLD
 
@@ -52,5 +52,3 @@ def treatment_effect_plot2(z2):
     ax.set_xlabel("Number of observations")
     ax.legend()
     return fig2
-
-
