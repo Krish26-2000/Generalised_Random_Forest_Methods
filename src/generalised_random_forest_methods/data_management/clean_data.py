@@ -29,7 +29,7 @@ def ipums_data(url):
 
 
 def clean_data(data, data_info):
-    r"""Cleaning the IPUMS dataset.
+    """Cleaning the IPUMS dataset.
 
     Information on columns to drop is stored in ``data_management\data_info.yaml``
 

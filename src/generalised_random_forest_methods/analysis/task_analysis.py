@@ -19,7 +19,7 @@ from generalised_random_forest_methods.utilities import read_yaml
 )
 @pytask.mark.produces(BLD / "python" / "data" / "treatment_effects_dict.pkl")
 def task_fit_causal_forest(depends_on, produces):
-    """
+    """Fit causal forest model on the data variables and get the treatment effects
 
     Args:
         depends_on(str):
@@ -65,13 +65,17 @@ def task_fit_causal_forest(depends_on, produces):
 @pytask.mark.depends_on(BLD / "python" / "data" / "treatment_effects_dict.pkl")
 @pytask.mark.produces(BLD / "python" / "data" / "df.pkl")
 def task_get_effects(depends_on, produces):
-    """
+    """Create dataframes of treatment effects and confidence intervals 
+        for creating a plot
 
     Args:
-        depends_on:
-        produces:
+        depends_on(str): The treatment effects dictionary created in the 
+                    previous task 
+        produces(str): the folder path containing data to be stored
 
     Returns:
+        df(pickle): A dataframe which contains treatment effects and 
+                    confidence intervals
 
     """
     with open(depends_on, "rb") as file:
@@ -93,6 +97,18 @@ def task_get_effects(depends_on, produces):
 @pytask.mark.depends_on(BLD / "python" / "data" / "df.pkl")
 @pytask.mark.produces(BLD / "python" / "data" / "z_rolling_means.pkl")
 def task_calculate_z_means(depends_on, produces):
+    """Calculate rolling means
+
+    Args:
+        depends_on(str): df.pkl which is dataframe created in the 
+                        previous task
+        produces(str): the folder path containing data to be stored
+
+    Returns:
+        z_rolling_means(pickle): a dataframe which contains rolling means
+                                for creating the graph
+
+    """
     df = pd.read_pickle(depends_on)
     # calculate rolling mean
     z = df.rolling(window=30, center=True).mean()
@@ -110,6 +126,21 @@ def task_calculate_z_means(depends_on, produces):
 )
 @pytask.mark.produces(BLD / "python" / "data" / "treatment_effects_dict2.pkl")
 def task_fit_causal_forest2(depends_on, produces):
+    """Fit causal forest model for the children hypothesis on the data variables and 
+        get the treatment effects
+
+    Args:
+        depends_on(str):
+            - training data from final_df for 2nd hypothesis
+            - testing data from final_df for 2nd hypothesis
+            - data_info.yaml which contains information of variables in study
+        produces(str): the folder path containing data to e stored
+
+    Returns:
+        treatment_effects_dict2(pickle): pickle file containing data on treatmnet effects and
+                                        confidence intervals
+
+    """
     train = pd.read_pickle(depends_on["train"])
     test = pd.read_pickle(depends_on["test"])
     data_info = read_yaml(depends_on["data_info"])
@@ -142,6 +173,19 @@ def task_fit_causal_forest2(depends_on, produces):
 @pytask.mark.depends_on(BLD / "python" / "data" / "treatment_effects_dict2.pkl")
 @pytask.mark.produces(BLD / "python" / "data" / "df2.pkl")
 def task_get_effects2(depends_on, produces):
+    """Create dataframes of treatment effects and confidence intervals 
+        for creating a plot for the 2nd hypothesis
+
+    Args:
+        depends_on(str): The treatment effects dictionary created in the 
+                    previous task 
+        produces(str): the folder path containing data to be stored
+
+    Returns:
+        df2(pickle): A dataframe which contains treatment effects and 
+                    confidence intervals for this hypothesis
+
+    """
     with open(depends_on, "rb") as file:
         causal_forest_data = pickle.load(file)
 
@@ -161,6 +205,18 @@ def task_get_effects2(depends_on, produces):
 @pytask.mark.depends_on(BLD / "python" / "data" / "df2.pkl")
 @pytask.mark.produces(BLD / "python" / "data" / "z_rolling_means2.pkl")
 def task_calculate_z_means2(depends_on, produces):
+    """Calculate rolling means for creating the plot for 2nd hypothesis
+
+    Args:
+        depends_on(str): df.pkl which is dataframe created in the 
+                        previous task
+        produces(str): the folder path containing data to be stored
+
+    Returns:
+        z_rolling_means(pickle): a dataframe which contains rolling means
+                                for creating the graph
+
+    """
     df = pd.read_pickle(depends_on)
     # calculate rolling mean
     z2 = df.rolling(window=30, center=True).mean()

@@ -7,10 +7,22 @@ from generalised_random_forest_methods.config import BLD
 
 path = BLD / "python" / "data" / "z_rolling_means.pkl"
 path_2 = BLD / "python" / "data" / "z_rolling_means2.pkl"
-heatmap_path = BLD / "python" / "data" / "final_df.pkl"
 
 
 def treatment_effect_plot(z):
+    """Creating plot depicting the treatment effects and the 
+        confidence intervals
+
+    Args:
+        z: data containing rolling means of the treatment 
+            effects and confidence intervals
+
+    Returns:
+        fig: A plot depicting the treatment effects and the 
+            confidence effects determined by the causal forest 
+            model
+    
+    """
     z = pd.read_pickle(path)
     fig, ax = plt.subplots(figsize=(12, 8))
     # plotlines for treatment effects and confidence intervals
@@ -33,6 +45,19 @@ def treatment_effect_plot(z):
 
 
 def treatment_effect_plot2(z2):
+    """Creating plot depicting the treatment effects and the 
+        confidence intervals for the 2nd hypothesis
+
+    Args:
+        z2: data containing rolling means of the treatment 
+            effects and confidence intervals
+
+    Returns:
+        fig2: A plot depicting the treatment effects and the 
+            confidence effects determined by the causal forest 
+            model for the 2nd hypothesis
+    
+    """
     z2 = pd.read_pickle(path_2)
     fig2, ax = plt.subplots(figsize=(12, 8))
     # plotlines for treatment effects and confidence intervals
