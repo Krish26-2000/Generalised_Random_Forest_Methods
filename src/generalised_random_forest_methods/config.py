@@ -8,9 +8,21 @@ BLD = SRC.joinpath("..", "..", "bld").resolve()
 TEST_DIR = SRC.joinpath("..", "..", "tests").resolve()
 PAPER_DIR = SRC.joinpath("..", "..", "paper").resolve()
 
-TASK_1 = ["outcome_train", "features_train", "treatment_train", "instrument_train", "features_test"]
+TASK_1 = [
+    "outcome_train",
+    "features_train",
+    "treatment_train",
+    "instrument_train",
+    "features_test",
+]
 
-TASK_2 = ["outcome2_train", "features2_train", "treatment2_train", "instrument2_train", "features2_test"]
+TASK_2 = [
+    "outcome2_train",
+    "features2_train",
+    "treatment_train",
+    "instrument_train",
+    "features2_test",
+]
 
 GROUPS = ["marital_status", "qualification"]
 

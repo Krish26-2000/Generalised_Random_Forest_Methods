@@ -1,15 +1,18 @@
 """Function(s) for saving the data set(s)."""
-
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from econml.grf import CausalForest, CausalIVForest, RegressionForest
-from econml.dml import CausalForestDML
 import scipy.special
-import matplotlib.pyplot as plt
-from sklearn.tree import plot_tree
 from dowhy import CausalModel
+from econml.dml import CausalForestDML
+from econml.grf import CausalForest
+from econml.grf import CausalIVForest
+from econml.grf import RegressionForest
+from IPython.display import display
+from IPython.display import Image
 from sklearn.model_selection import train_test_split
-from IPython.display import Image,display
+from sklearn.tree import plot_tree
+
 
 def ipums_data(url):
     """Import and save the data created from IPUMS.
@@ -19,15 +22,15 @@ def ipums_data(url):
 
     Returns:
         data(pandas.DataFrame): The IPUMS data.
-    
+
     """
     data = pd.read_csv(url)
     return data
 
 
 def clean_data(data, data_info):
-    """Cleaning the IPUMS dataset
-    
+    r"""Cleaning the IPUMS dataset.
+
     Information on columns to drop is stored in ``data_management\data_info.yaml``
 
     Args:
@@ -43,7 +46,7 @@ def clean_data(data, data_info):
         data_info (dict): Information on data set stored in data_info.yaml. The
             following keys can be accessed:
             - 'columns_to_drop'(list): Names of variable column in the data to drop
-            
+
     Returns:
         data(pandas.DataFrame): The cleaned_df DataFrame.
 
@@ -52,18 +55,18 @@ def clean_data(data, data_info):
 
     data = data.drop(columns=columns_to_drop)
     data = data.dropna()
-    data = data[data["MARRINYR"] == 2] 
-    data['SEX_SP'] = data['SEX_SP'].astype(int)
-    data = data[data["AGE"] > 18] 
+    data = data[data["MARRINYR"] == 2]
+    data["SEX_SP"] = data["SEX_SP"].astype(int)
+    data = data[data["AGE"] > 18]
     data = data[data["MARST"] == 1]
-    data = data.rename(columns = {'SEX_SP' : 'spouse_sex', 'MARST' : 'married_status'})
-    data.loc[data.ELDCH == 99, 'ELDCH'] = 0
+    data = data.rename(columns={"SEX_SP": "spouse_sex", "MARST": "married_status"})
+    data.loc[data.ELDCH == 99, "ELDCH"] = 0
     return data
 
 
 def create_columns(data):
-    """Create new variables for analysis
-    
+    """Create new variables for analysis.
+
     Args:conda
         data (pandas.DataFrame): The cleaned_df DataFrame
             - 'same_sex_couple'(int): variable where the sex of the person and the spouse is same
@@ -76,46 +79,27 @@ def create_columns(data):
         data(pandas.DataFrame): the final_df DataFrame
 
     """
-    data.loc[:, 'same_sex_couple'] = 0
-    data.loc[data['SEX'] == data['spouse_sex'], 'same_sex_couple'] = 1
-    data.loc[:, 'married_year'] = data["YEAR"] - 1
-    data["married_year"].value_counts() #to understand how many people
-                                        #married in each year.
-    data.loc[:, 'child_birth_year'] = 2023 - data["ELDCH"]
+    data.loc[:, "same_sex_couple"] = 0
+    data.loc[data["SEX"] == data["spouse_sex"], "same_sex_couple"] = 1
+    data.loc[:, "married_year"] = data["YEAR"] - 1
+    data.loc[:, "child_birth_year"] = 2023 - data["ELDCH"]
     data["outcome"] = (data["married_year"] > 2015).astype(int)  # Y
-    data["outcome_child"] = (data["child_birth_year"] > 2015).astype(int) # Y2
+    data["outcome_child"] = (data["child_birth_year"] > 2015).astype(int)  # Y2
     return data
 
 
-def return_var_dict():
-    """Creates a dictionary containg the names of columns foe causal forest analysis
+def causal_model(data, data_info):
+    """Creates a visual model to understand the model.
 
     Args:
-        'features','treatment','instrument','outcome'(list): variables containing column names for analysis
+        data(pandas.DataFrame): the final_df dataset
+        data_info(dict): Information on data set stored in data_info.yaml. The
+            following keys can be accessed:
+            - 'treatment': T_i or binary treatment variable
+            - 'outcome': Y_i or dependent variable which is binary
+            - 'features': X_i or independent variables
+            - 'instrument': W_i or instrument variable
 
-    Returns:
-        var_dict(dict): dictionary containing names of variables
-
-    """
-    var_dict = {
-                'features': ['SEX', 'RACE', 'EDUC', 'EMPSTAT', 'AGE'],  # X
-                'treatment': 'same_sex_couple',  # T
-                'instrument': 'INCTOT',  # W
-                'outcome': 'outcome',  # Y
-                    }
-    return var_dict
-
-
-
-def causal_model(data, features, treatment, instrument, outcome):
-    """Creates a visual model to understand the model
-
-    Args:
-        data(pandas.DataFrame): the final_df dataset  
-        features(list): list of columns of independent X_i variables
-        treatment(list): list of columns of treatment T_i variables
-        instrument(list):list of columns of instrument W_i variables
-        outcome(list):list of columns of outcome or dependent Y_i variable
 
     Returns:
         model: a model which can be viewed and saved in png format
@@ -123,16 +107,17 @@ def causal_model(data, features, treatment, instrument, outcome):
     """
     model = CausalModel(
         data=data,
-        treatment=treatment,
-        outcome=outcome,
-        common_causes=features,
-        instruments=instrument,
-        effect_modifiers=None )
+        treatment=data_info["treatment"],
+        outcome=data_info["outcome"],
+        common_causes=data_info["features"],
+        instruments=data_info["instrument"],
+        effect_modifiers=None,
+    )
     return model
 
 
-def train_test_data(data):
-    """Split the dataset into training and testing datasets
+def train_test_data(data, test_size=0.2):
+    """Split the dataset into training and testing datasets.
 
     Args:
         data(pandas.DataFrame): The final_df dataset
@@ -142,38 +127,22 @@ def train_test_data(data):
         test(pandas.DataFrame):The testing dataset
 
     """
-    train, test = train_test_split(data, test_size=0.2)
+    train, test = train_test_split(data, test_size=test_size)
     return train, test
 
 
-def return_child_dict():
-    """Creates a dictionary containg the names of columns foe causal forest analysis for the children study
+def causal_model_child(data, data_info):
+    """Creates a visual model to understand the children causal model.
 
     Args:
-        'features2','treatment2','instrument2','outcome2'(list): variables containing column names for analysis
+        data(pandas.DataFrame): the final_df dataset
+        data_info(dict): Information on data set stored in data_info.yaml. The
+            following keys can be accessed:
+            - 'treatment': T_i or binary treatment variable
+            - 'outcome2': Y_i or dependent variable which is binary
+            - 'features2': X_i or independent variables
+            - 'instrument': W_i or instrument variable
 
-    Returns:
-        var_dict(dict): dictionary containing names of variables
-
-    """
-    var_dict = {
-                'features2': ['SEX', 'RACE', 'EDUC', 'EMPSTAT', 'AGE', 'NCHILD'],  # X
-                'treatment2': 'same_sex_couple',  # T
-                'instrument2': 'INCTOT',  # W
-                'outcome2': 'outcome_child',  # Y
-                    }
-    return var_dict
-
-
-def causal_model_child(data, features2, treatment2, instrument2, outcome2):
-    """Creates a visual model to understand the children causal model
-
-    Args:
-        data(pandas.DataFrame): the final_df dataset  
-        features2(list): list of columns of independent X_i variables
-        treatment2(list): list of columns of treatment T_i variables
-        instrument2(list):list of columns of instrument W_i variables
-        outcome2(list):list of columns of outcome or dependent Y_i variable
 
     Returns:
         model: a model which can be viewed and saved in png format
@@ -181,24 +150,10 @@ def causal_model_child(data, features2, treatment2, instrument2, outcome2):
     """
     model = CausalModel(
         data=data,
-        treatment=treatment2,
-        outcome=outcome2,
-        common_causes=features2,
-        instruments=instrument2,
-        effect_modifiers=None)
+        treatment=data_info["treatment"],
+        outcome=data_info["outcome2"],
+        common_causes=data_info["features2"],
+        instruments=data_info["instrument"],
+        effect_modifiers=None,
+    )
     return model
-
-
-def train_test_childdata(data):
-    """Split the dataset into training and testing datasets
-
-    Args:
-        data(pandas.DataFrame): The final_df dataset
-
-    Returns:
-        train2(pandas.DataFrame): The training dataset
-        test2(pandas.DataFrame):The testing dataset
-
-    """
-    train2, test2 = train_test_split(data, test_size=0.3)
-    return train2, test2

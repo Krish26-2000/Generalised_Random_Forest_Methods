@@ -13,3 +13,30 @@ columns_to_drop:
     - RACED
     - EDUCD
     - EMPSTATD
+
+features:
+    - SEX
+    - RACE
+    - EDUC
+    - EMPSTAT
+    - AGE
+
+treatment:
+    - same_sex_couple
+
+instrument:
+    - INCTOT
+
+outcome:
+    - outcome
+
+features2:
+    - SEX
+    - RACE
+    - EDUC
+    - EMPSTAT
+    - AGE
+    - NCHILD
+
+outcome2:
+    - outcome_child

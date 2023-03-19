@@ -24,3 +24,6 @@ bld/
 *.pdf
 *.run.xml
 *.synctex.gz
+
+#pycharm
+.idea/

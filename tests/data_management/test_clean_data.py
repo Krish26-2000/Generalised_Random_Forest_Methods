@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 import pytest
-from generalised_random_forest_methods.data_management import clean_data
 from generalised_random_forest_methods.config import TEST_DIR
+from generalised_random_forest_methods.data_management import clean_data
 from generalised_random_forest_methods.utilities import read_yaml
 
 
