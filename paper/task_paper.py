@@ -8,7 +8,6 @@ from pytask_latex import compilation_steps as cs
 
 documents = [
     "generalised_random_forest_methods",
-    "generalised_random_forest_methods_pres",
 ]
 
 for document in documents:
