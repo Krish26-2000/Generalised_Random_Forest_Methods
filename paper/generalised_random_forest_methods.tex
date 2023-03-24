@@ -123,7 +123,7 @@ I sought to wonder whether same-sex marriages have increased or not. The dataset
 years having bans in some states and years after the removal of the same.
 
 The 2nd hypothesis of this study is that "Due to the removal of ban on same-sex marriages, number of such couples starting a family (own or 
-adopted) have increased". So. the outcome variable is whether the child in the family was born after 2015 or not. A drawback or further refining 
+adopted) have increased". So, the outcome variable is whether the child in the family was born after 2015 or not. A drawback or further refining 
 on this hypothesis is needed as I couldn't quantify the case of adopted children,i.e, at what age the child was adopted is not known.
 Additionally, the treatment and instrument variables remain the same for this hypothesis.
 
@@ -208,7 +208,15 @@ After fitting the causal forest model on the data, the treatment effects are plo
 forest model, criterion is set to 'het' which specifies heterogeneous treatment effects, which helps in observing the heterogeneous effects of the 
 treatment on the outcome.
 
-In figure 2(a), the the CATE looks 
+Figure 2(a) explains the outcome of 1st hypothesis. At first the CATE looks negative and just a stable line, however, as the observation increases,
+ the model is better fitted on the dataset and able to capture the treatment effects. When the observations are relatively larger, the CATE is 
+ relatively positive. From the plot, it can be stated that if more observations are taken and the sample-size is increased in terms of years, we could
+ get a proper picture of the impact of the policy intervention as it takes time to undergo social changes in the society.
+ 
+Figure 2(b) explains the outcome of 2st hypothesis. In the case of starting a family, we could see a trend starting from negative and improving
+gradually. This results have an impact due to its relation with the 1st hypothesis as the treatment variable is the same as the 1st hypothesis. 
+Here, we need to discount for the fact that we are taking children into consideration by birth and not able to quantify the children who are adopted 
+years after their birth. These results would be more accurate if we can have that number as well and more generalizations can be made accordingly.
 
 It is visible in both the hypothesis that the treatment effects gradually turns positive and the average treatment effect is also positive. A 
 positive treatment effects depicts that the intervention or the treatment is positively affecting the sample.
