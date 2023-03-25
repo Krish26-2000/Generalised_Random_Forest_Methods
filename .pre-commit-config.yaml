@@ -73,11 +73,6 @@ repos:
             pydocstyle,
             Pygments,
           ]
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.2
-    hooks:
-      - id: codespell
-        args: [--skip="**.ipynb"]
   - repo: https://github.com/guilatrova/tryceratops
     rev: v1.1.0
     hooks:
