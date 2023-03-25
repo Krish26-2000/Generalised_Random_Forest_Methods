@@ -35,7 +35,7 @@
 \AtBeginDocument{\toggletrue{blx@useprefix}}
 \AtBeginBibliography{\togglefalse{blx@useprefix}}
 \setlength{\bibitemsep}{1.5ex}
-\addbibresource{../../paper/refs.bib}
+\addbibresource{../paper/refs.bib}
 
 
 \usepackage[unicode=true]{hyperref}
@@ -70,21 +70,6 @@
     \today
 }
 \maketitle
-<<<<<<< HEAD
-\begin{abstract} This project is an attempt to use Machine learning methods like Generalized Random Forest for asserting the hypothesis that
-''after the removal of ban on same-sex marriages in the USA in the span of 2004--2015, the same-sex married couples have increased''.
-The extention of this study is to understand whether such couples are encouraged to start a family.
-The motivation behind this study is a research paper by \textit{Susan Athey, Julie Tibshirani and Stefan Wager} on \href{https://arxiv.org/pdf/1610.01271}{Generalized Random Forest}
-I have used the methods discussed in the paper and tried to implement the methods on a different dataset.
-The aim of both the studies is to study the heterogeneous treatment effects on the dependent variable.
-I have used the EconML package by Microsoft to implement Causal Forest Double Machine Learning method on the dataset.
-With this approach, I calculate the treatment effects on the outcome and ultimately get the average treatment effect.\\
-
-A positive conditional average treatment effect stats that the policy intervention, or in our case, the removal of ban has a positive
-impact on the number of marriages in same-sex couples.
-=======
-
-
 \begin{abstract}
     This project is an attempt to use Machine learning methods like Generalized Random Forest for asserting the hypothesis that
     ``after the removal of ban on same-sex marriages in the USA in the span of 2004--2015, the same-sex married couples have increased''.
@@ -98,7 +83,6 @@ impact on the number of marriages in same-sex couples.
 
     A positive conditional average treatment effect stats that the policy intervention, or in our case, the removal of ban has a positive
     impact on the number of marriages in same-sex couples.
->>>>>>> 1cbff844166c4940afc18c7ec02f52394706f8f7
 \end{abstract}
 
 \clearpage
@@ -193,17 +177,13 @@ can be seen in the Figure 1 (a and b).
 
 \begin{figure}[!tbp]
   \begin{subfigure}[b]{0.5\textwidth}
-<<<<<<< HEAD
-    \includegraphics[width=\textwidth]{/home/cheekoti_la/krishna/Generalised_Random_Forest_Methods/bld/python/plots/causal_model.png}
-=======
-    \includegraphics[width=\textwidth]{~./plots/causal_model}
->>>>>>> 1cbff844166c4940afc18c7ec02f52394706f8f7
+    \includegraphics[width=\textwidth]{../bld/python/plots/causal_model.png}
     \caption{Causal Model for 1st hypothesis.}
     \label{fig:f1}
   \end{subfigure}
   \hfill
   \begin{subfigure}[b]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{/home/cheekoti_la/krishna/Generalised_Random_Forest_Methods/bld/python/plots/child_causal_model.png}
+    \includegraphics[width=\textwidth]{../bld/python/plots/child_causal_model.png}
     \caption{Causal Model for 2nd hypothesis}
     \label{fig:f2}
   \end{subfigure}
@@ -219,13 +199,13 @@ treatment $T_i$ and an instrument $W_i$, where $\tau(X)$ is the causal effects o
 
 \begin{figure}[!tbp]
   \begin{subfigure}[c]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{/home/cheekoti_la/krishna/Generalised_Random_Forest_Methods/bld/python/plots/treatment_effects_plot.png}
+    \includegraphics[width=\textwidth]{../bld/python/plots/treatment_effects_plot.png}
     \caption{Treatment effect on same-sex couple}
     \label{fig:f3}
   \end{subfigure}
   \hfill
   \begin{subfigure}[c]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{/home/cheekoti_la/krishna/Generalised_Random_Forest_Methods/bld/python/plots/children_treatment_effects_plot.png}
+    \includegraphics[width=\textwidth]{../bld/python/plots/children_treatment_effects_plot.png}
     \caption{Treatment effect on child-birth}
     \label{fig:f4}
   \end{subfigure}
@@ -265,7 +245,7 @@ this ambiguity than the results will be more resilient and interpretable.
 
 
 % \bibliographystyle{plain} % We choose the "plain" reference style
-% \bibliography{refs} 
+% \bibliography{refs}
 
 \setstretch{1}
 \nocite{*}
