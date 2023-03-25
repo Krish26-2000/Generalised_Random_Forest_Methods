@@ -35,7 +35,7 @@
 \AtBeginDocument{\toggletrue{blx@useprefix}}
 \AtBeginBibliography{\togglefalse{blx@useprefix}}
 \setlength{\bibitemsep}{1.5ex}
-\addbibresource{/home/cheekoti_la/krishna/Generalised_Random_Forest_Methods/paper/refs.bib}
+\addbibresource{../../paper/refs.bib}
 
 
 \usepackage[unicode=true]{hyperref}
@@ -75,7 +75,7 @@
 
 \begin{abstract}
     This project is an attempt to use Machine learning methods like Generalized Random Forest for asserting the hypothesis that
-    ``fter the removal of ban on same-sex marriages in the USA in the span of 2004--2015, the same-sex married couples have increased''.
+    ``after the removal of ban on same-sex marriages in the USA in the span of 2004--2015, the same-sex married couples have increased''.
     The extention of this study is to understand whether such couples are encouraged to start a family.
     The motivation behind this
     study is a research paper by \textit{Susan Athey, Julie Tibshirani and Stefan Wager} on \href{https://arxiv.org/pdf/1610.01271}{Generalized Random Forest}
@@ -181,7 +181,7 @@ can be seen in the Figure 1 (a and b).
 
 \begin{figure}[!tbp]
   \begin{subfigure}[b]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{/home/cheekoti_la/krishna/Generalised_Random_Forest_Methods/bld/python/plots/causal_model}
+    \includegraphics[width=\textwidth]{~./plots/causal_model}
     \caption{Causal Model for 1st hypothesis.}
     \label{fig:f1}
   \end{subfigure}
@@ -247,7 +247,9 @@ these couples to start a family. This project is in a primary stage of understan
 include the case of adoption and the ambiguity in terms of time and age of child adoption. If we can build more specific variables which reduces
 this ambiguity than the results will be more resilient and interpretable.
 
-% section introduction (end)
+
+% \bibliographystyle{plain} % We choose the "plain" reference style
+% \bibliography{refs} 
 
 \setstretch{1}
 \printbibliography
