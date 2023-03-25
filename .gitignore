@@ -27,3 +27,6 @@ bld/
 
 #pycharm
 .idea/
+
+#vscode
+.vscode/
