@@ -1,44 +1,35 @@
-name: gen_rfm
+name: gen_rfm_2
 channels:
-  - conda-forge
   - plotly
-
-  - nodefaults
-
+  - conda-forge
+  - defaults
 dependencies:
   - python=3.9
-  - pip >=21.1
-  - setuptools_scm
-  - toml
+  - pip=23.0.1
 
-  # Reproducibility
-  - conda-lock
-
-  # Package dependencies
-  - pytask>=0.0.14
-  - pytask-latex>=0.0.12
-
-  # Misc
-  - black
-  - pre-commit
-  - pytest
-  - pytest-cov
-  - pytest-xdist
-  - tox-conda
-
-  - pdbpp
-  - ipykernel
-  - jupyterlab
-  - pyyaml
-  - plotly>=5.5.0
-  - plotly-geo
-  - pandas
-  - statsmodels
-  - python-graphviz
-  - python-kaleido
-  - econml
-  - matplotlib
-  - scikit-learn
+  - black=23.1.0
+  - conda-lock=1.4.0
+  - econml=0.12.0
+  - ipykernel=6.21.2
+  - jupyterlab=3.6.1
+  - matplotlib=3.7.0
+  - pandas=1.5.3
+  - pdbpp=0.10.3
+  - plotly=5.13.1
+  - pre-commit=3.1.1
+  - pytest=7.2.2
+  - pytest-cov=4.0.0
+  - pytest-xdist=3.2.0
+  - python-graphviz=0.20.1
+  - python-kaleido=0.2.1
+  - pyyaml=6.0
+  - scikit-learn=1.2.1
+  - setuptools_scm=7.1.0
+  - statsmodels=0.13.5
+  - toml=0.10.2
+  - tox-conda=0.10.2
 
   - pip:
-    - -e .  # installs the project
+    - pytask==0.2.0
+    - pytask-latex==0.2.0
+    - -e .

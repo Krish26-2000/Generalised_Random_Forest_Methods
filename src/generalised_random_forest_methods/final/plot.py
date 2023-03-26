@@ -39,7 +39,7 @@ def treatment_effect_plot(z):
     # axes and create legend
     ax.set_ylabel("Treatment Effects")
     ax.set_xlabel("Number of observations")
-    ax.set_ylim([-5, 5])
+    ax.set_ylim([-2, 2])
     ax.legend()
     return fig
 

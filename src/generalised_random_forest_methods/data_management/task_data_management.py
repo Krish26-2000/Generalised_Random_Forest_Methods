@@ -16,7 +16,7 @@ url = "https://www.dropbox.com/s/s2gr0x6wy1ms3e6/usa_00007.csv?dl=1"
 
 
 @pytask.mark.produces(BLD / "python" / "usa_00007.csv")
-def tas_save_ipums_data(produces):
+def task_save_ipums_data(produces):
     """Import IPUMS data from Dropbox folder and save in the BLD folder.
 
     Args:
