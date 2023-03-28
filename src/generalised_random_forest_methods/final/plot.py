@@ -3,11 +3,20 @@ import numpy as np
 import pandas as pd
 import plotly.figure_factory as ff
 import plotly.graph_objects as go
+import seaborn as sns
 from generalised_random_forest_methods.config import BLD
+
 
 path = BLD / "python" / "data" / "z_rolling_means.pkl"
 path_2 = BLD / "python" / "data" / "z_rolling_means2.pkl"
 
+def feature_importance_plot(x, y):
+
+    fig, ax = plt.subplots()
+    sns.barplot(x, y, color='C0').set(
+    title='Feature Importances', ylabel='Importance')
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right");
+    return fig
 
 def treatment_effect_plot(z):
     """Creating plot depicting the treatment effects and the 
