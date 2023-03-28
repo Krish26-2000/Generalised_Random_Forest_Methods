@@ -55,9 +55,11 @@ def task_fit_causal_forest(depends_on, produces):
     CATE = model.const_marginal_ate(X_test)
     print(f"CATE: {CATE}")
     treatment_effects = model.effect(X)
+    fea_impo = model.feature_importances()[0]
     # calculate lower bound and upper bound confidence intervals
     lb, ub = model.effect_interval(X, alpha=0.05)
-    causal_forest_data = {"treatment_effects": treatment_effects, "lb": lb, "ub": ub}
+    causal_forest_data = {"treatment_effects": treatment_effects, "lb": lb, "ub": ub,
+                          "feature_importance": fea_impo}
     with open(produces, "wb") as file:
         pickle.dump(causal_forest_data, file)
 
@@ -163,9 +165,11 @@ def task_fit_causal_forest2(depends_on, produces):
     CATE = model.const_marginal_ate(X2_test)
     print(f"CATE: {CATE}")
     treatment_effects = model.effect(X2)
+    fea_impo = model.feature_importances()[0]
     # calculate lower bound and upper bound confidence intervals
     lb, ub = model.effect_interval(X2, alpha=0.05)
-    causal_forest_data = {"treatment_effects": treatment_effects, "lb": lb, "ub": ub}
+    causal_forest_data = {"treatment_effects": treatment_effects, "lb": lb, "ub": ub,
+                          "feature_importance": fea_impo}
     with open(produces, "wb") as file:
         pickle.dump(causal_forest_data, file)
 

@@ -28,6 +28,7 @@ dependencies:
   - statsmodels=0.13.5
   - toml=0.10.2
   - tox-conda=0.10.2
+  - seaborn=0.12.2
 
   - pip:
     - pytask==0.2.0

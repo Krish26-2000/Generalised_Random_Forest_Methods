@@ -228,6 +228,30 @@ years after their birth. These results would be more accurate if we can have tha
 It is visible in both the hypothesis that the treatment effects gradually turns positive and the average treatment effect is also positive. A
 positive treatment effects depicts that the intervention or the treatment is positively affecting the sample.
 
+
+\begin{figure}[!tbp]
+  \begin{subfigure}[c]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../bld/python/plots/feature_importance_plot.png}
+    \caption{Hypothesis 1}
+    \label{fig:f5}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[c]{0.5\textwidth}
+    \includegraphics[width=\textwidth]{../bld/python/plots/feature_importance_child_plot.png}
+    \caption{Hypothesis 2}
+    \label{fig:f6}
+  \end{subfigure}
+  \caption{Feature Importance to understand Dimensions of Heterogeniety}
+\end{figure}
+
+In CausalForestDML, we can order the importance of each independent variable or feature.
+This helps us understand which variable influences the outcome the most.
+The most important feature also decides on the heterogeneous treatment on each individual.
+As observed here, in both the Fig.3(a) and 3(b), AGE is the most significant variable which influences the outcome by 50\% in both the hypotheses.
+This is followed by EDUC and RACE in hypothesis 1 and by NCHILD, EDUC and RACE in hpyothesis 2.
+The reason for this result is that due to social responsibilities and fear of isolation, it
+becomes difficult for homosexual people to reveal their sexuality and take decisions such as marriage and family after a certain age.
+
 \section{Conclusion} % (fold)
 \label{sec:Conclusion}
 

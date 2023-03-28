@@ -8,42 +8,37 @@ from generalised_random_forest_methods.analysis.model import train_causal_forest
 from generalised_random_forest_methods.analysis.model import return_param_dict
 from generalised_random_forest_methods.analysis.model import return_child_param_dict
 
+
 @pytask.mark.depends_on(
         {
-           "data": BLD / "python" / "data" / "trained_df.pkl",
            "data_info": SRC / "data_management" / "data_info.yaml",
+           "treatment_dict": BLD / "python" / "data" / "treatment_effects_dict.pkl",
         }
     )
 @pytask.mark.produces(BLD / "python" / "plots" / "feature_importance_plot.png")
 def task_feature_importance(depends_on, produces):
 
-    data = pd.read_pickle(depends_on["data"])
     data_info = read_yaml(depends_on["data_info"])
+    f_impo = pd.read_pickle(depends_on["treatment_dict"])
 
-    X = train[data_info["features"]]
-    params = return_param_dict()
-    features_plot = feature_importance_plot(x= X.columns, y= train_causal_forest_model(params).feature_importances([0]))
+    features_plot = feature_importance_plot(x=data_info["features"], y=f_impo["feature_importance"])
     features_plot.savefig(produces)
-
 
 
 @pytask.mark.depends_on(
         {
-           "data": BLD / "python" / "data" / "trained2_df.pkl",
            "data_info": SRC / "data_management" / "data_info.yaml",
+           "treatment_dict": BLD / "python" / "data" / "treatment_effects_dict2.pkl",
         }
     )
-@pytask.mark.produces(BLD / "python" / "plots" / "feature_importance_plot.png")
+@pytask.mark.produces(BLD / "python" / "plots" / "feature_importance_child_plot.png")
 def task_feature_importance_child(depends_on, produces):
 
-    data = pd.read_pickle(depends_on["data"])
     data_info = read_yaml(depends_on["data_info"])
+    f_impo = pd.read_pickle(depends_on["treatment_dict"])
 
-    X = train[data_info["features2"]]
-    params = return_child_param_dict()
-    features_plot = feature_importance_plot(x= X.columns, y= train_causal_forest_model(params).feature_importances([0]))
+    features_plot = feature_importance_plot(x=data_info["features2"], y=f_impo["feature_importance"])
     features_plot.savefig(produces)
-
 
 
 @pytask.mark.depends_on(BLD / "python" / "data" / "z_rolling_means.pkl")
