@@ -7,8 +7,6 @@ import seaborn as sns
 from generalised_random_forest_methods.config import BLD
 
 
-path = BLD / "python" / "data" / "z_rolling_means.pkl"
-path_2 = BLD / "python" / "data" / "z_rolling_means2.pkl"
 
 def feature_importance_plot(x, y):
 
@@ -32,7 +30,6 @@ def treatment_effect_plot(z):
             model
     
     """
-    z = pd.read_pickle(path)
     fig, ax = plt.subplots(figsize=(12, 8))
     # plotlines for treatment effects and confidence intervals
     ax.plot(
@@ -51,38 +48,3 @@ def treatment_effect_plot(z):
     ax.set_ylim([-2, 2])
     ax.legend()
     return fig
-
-
-def treatment_effect_plot2(z2):
-    """Creating plot depicting the treatment effects and the 
-        confidence intervals for the 2nd hypothesis
-
-    Args:
-        z2: data containing rolling means of the treatment 
-            effects and confidence intervals
-
-    Returns:
-        fig2: A plot depicting the treatment effects and the 
-            confidence effects determined by the causal forest 
-            model for the 2nd hypothesis
-    
-    """
-    z2 = pd.read_pickle(path_2)
-    fig2, ax = plt.subplots(figsize=(12, 8))
-    # plotlines for treatment effects and confidence intervals
-    ax.plot(
-        z2["cate"],
-        marker=".",
-        linestyle="-",
-        linewidth=0.5,
-        label="CATE",
-        color="indigo",
-    )
-    ax.plot(z2["lb"], marker=".", linestyle="-", linewidth=0.5, color="steelblue")
-    ax.plot(z2["ub"], marker=".", linestyle="-", linewidth=0.5, color="steelblue")
-    # axes and create legend
-
-    ax.set_ylabel("Treatment Effects")
-    ax.set_xlabel("Number of observations")
-    ax.legend()
-    return fig2

@@ -2,11 +2,11 @@ import pandas as pd
 import pytask
 from generalised_random_forest_methods.config import BLD, SRC
 from generalised_random_forest_methods.final.plot import treatment_effect_plot
-from generalised_random_forest_methods.final.plot import treatment_effect_plot2
 from generalised_random_forest_methods.final.plot import feature_importance_plot 
 from generalised_random_forest_methods.utilities import read_yaml
 from generalised_random_forest_methods.analysis.model import train_causal_forest_model
 from generalised_random_forest_methods.analysis.model import return_param_dict
+from generalised_random_forest_methods.analysis.model import return_child_param_dict
 
 @pytask.mark.depends_on(
         {
@@ -24,6 +24,26 @@ def task_feature_importance(depends_on, produces):
     params = return_param_dict()
     features_plot = feature_importance_plot(x= X.columns, y= train_causal_forest_model(params).feature_importances([0]))
     features_plot.savefig(produces)
+
+
+
+@pytask.mark.depends_on(
+        {
+           "data": BLD / "python" / "data" / "trained2_df.pkl",
+           "data_info": SRC / "data_management" / "data_info.yaml",
+        }
+    )
+@pytask.mark.produces(BLD / "python" / "plots" / "feature_importance_plot.png")
+def task_feature_importance_child(depends_on, produces):
+
+    data = pd.read_pickle(depends_on["data"])
+    data_info = read_yaml(depends_on["data_info"])
+
+    X = train[data_info["features2"]]
+    params = return_child_param_dict()
+    features_plot = feature_importance_plot(x= X.columns, y= train_causal_forest_model(params).feature_importances([0]))
+    features_plot.savefig(produces)
+
 
 
 @pytask.mark.depends_on(BLD / "python" / "data" / "z_rolling_means.pkl")
@@ -57,6 +77,6 @@ def task_plot_treatment_effects2(depends_on, produces):
         The children treatment effects plot
     
     """
-    z2 = pd.read_pickle(depends_on)
-    plot = treatment_effect_plot2(z2)
+    z = pd.read_pickle(depends_on)
+    plot = treatment_effect_plot(z)
     plot.savefig(produces)
