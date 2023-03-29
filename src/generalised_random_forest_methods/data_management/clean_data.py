@@ -1,18 +1,10 @@
 """Function(s) for saving the data set(s)."""
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import scipy.special
 from dowhy import CausalModel
-from econml.dml import CausalForestDML
-from econml.grf import CausalForest
-from econml.grf import CausalIVForest
-from econml.grf import RegressionForest
 from IPython.display import display
 from IPython.display import Image
 from sklearn.model_selection import train_test_split
-from sklearn.tree import plot_tree
-
 
 def ipums_data(url):
     """Import and save the data created from IPUMS.

@@ -4,10 +4,6 @@ from generalised_random_forest_methods.config import BLD, SRC
 from generalised_random_forest_methods.final.plot import treatment_effect_plot
 from generalised_random_forest_methods.final.plot import feature_importance_plot 
 from generalised_random_forest_methods.utilities import read_yaml
-from generalised_random_forest_methods.analysis.model import train_causal_forest_model
-from generalised_random_forest_methods.analysis.model import return_param_dict
-from generalised_random_forest_methods.analysis.model import return_child_param_dict
-
 
 @pytask.mark.depends_on(
         {
@@ -17,7 +13,18 @@ from generalised_random_forest_methods.analysis.model import return_child_param_
     )
 @pytask.mark.produces(BLD / "python" / "plots" / "feature_importance_plot.png")
 def task_feature_importance(depends_on, produces):
+    """Create plot for feature importance for hypothesis 1 
 
+    Args:
+        depends_on(str): 
+                - data_info.yaml which contains information of variables in study
+                - The treatment effects dictionary created in task_analysis.py
+        produces(str): the folder path containing data to be stored
+
+    Returns:
+        The feature importance plot
+    
+    """
     data_info = read_yaml(depends_on["data_info"])
     f_impo = pd.read_pickle(depends_on["treatment_dict"])
 
@@ -33,7 +40,18 @@ def task_feature_importance(depends_on, produces):
     )
 @pytask.mark.produces(BLD / "python" / "plots" / "feature_importance_child_plot.png")
 def task_feature_importance_child(depends_on, produces):
+    """Create plot for feature importance for hypothesis 2 
 
+    Args:
+        depends_on(str): 
+                - data_info.yaml which contains information of variables in study
+                - The child treatment effects dictionary created in task_analysis.py
+        produces(str): the folder path containing data to be stored
+
+    Returns:
+        The child feature importance plot
+    
+    """
     data_info = read_yaml(depends_on["data_info"])
     f_impo = pd.read_pickle(depends_on["treatment_dict"])
 

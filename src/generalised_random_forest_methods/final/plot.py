@@ -1,19 +1,28 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import plotly.figure_factory as ff
-import plotly.graph_objects as go
 import seaborn as sns
-from generalised_random_forest_methods.config import BLD
 
 
 def feature_importance_plot(x, y):
+    """Creating plot depicting the significance of each variable
+    on the outcome variable
 
+    Args:
+        x: data containing the columns of X variable
+        y: data containing the outcome of feature_imporatance from the 
+            model
+
+    Returns:
+        fig: A plot which explains the influence of each variable on the 
+            outcome.
+    
+    """
     fig, ax = plt.subplots()
-    sns.barplot(x=x, y=y, color='C0').set(title='Feature Importances', ylabel='Importance')
+    sns.barplot(x, y, color='C0').set(
+    title='Feature Importances', ylabel='Importance')
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right");
     return fig
-
 
 def treatment_effect_plot(z):
     """Creating plot depicting the treatment effects and the 
