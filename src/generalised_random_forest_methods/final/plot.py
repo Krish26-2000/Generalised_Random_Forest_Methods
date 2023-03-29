@@ -19,10 +19,11 @@ def feature_importance_plot(x, y):
     
     """
     fig, ax = plt.subplots()
-    sns.barplot(x, y, color='C0').set(
+    sns.barplot(x=x, y=y, color='C0').set(
     title='Feature Importances', ylabel='Importance')
     ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right");
     return fig
+
 
 def treatment_effect_plot(z):
     """Creating plot depicting the treatment effects and the 
